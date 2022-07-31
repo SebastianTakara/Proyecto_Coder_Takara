@@ -4,14 +4,14 @@
 
 {% block content %}
 
-<!-- Content section-->
+{% for historias in historias %}
 <section class="py-5">
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h2>Inicio</h2>
-                <p class="lead">A single, lightweight helper class allows you to add engaging, full width background images to sections of your page.</p>
-                <p class="mb-0">{{mensaje}}</p>
+                <h1>{{ historias.titulo }}</h1>
+                <p class="lead">{{ historias.subtitulo }}</p>
+                <p class="mb-0">{{ historias.cuerpo }}</p>
             </div>
         </div>
     </div>
@@ -26,12 +26,11 @@
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-lg-6">
-                <h2>Engaging Background Images</h2>
-                <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
-                <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                <h2>{{ historias.autor }}</h2>
+                <p class="lead">{{ historias.fecha }}</p>
             </div>
         </div>
     </div>
 </section>
-
+{% endfor %}
 {% endblock %}

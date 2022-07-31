@@ -8,3 +8,6 @@ class Historias(models.Model):
     cuerpo= models.CharField(max_length=800)
     autor= models.CharField(max_length=100)
     fecha= models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Titulo: {self.titulo}"

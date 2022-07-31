@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Borrar</title>
+    <title>Document</title>
 </head>
 <body>
-
-
-    <form method="post">{% csrf_token %}
-        ¿Estás seguro que deseas borrar la historia "{{ object }}"?
-        <input type="submit" value="Eliminar" />
+    <form action="" method="POST">{% csrf_token %}
+        
+        {{form.as_p}}
+        <button type="submit">Registrar</button>
+        <button><a href="login">Si ya tiene usuario,use el Login</a></button>
     </form>
-    <a href="{% url 'List' %}">Regresar</a>
-    
 </body>
 </html>
