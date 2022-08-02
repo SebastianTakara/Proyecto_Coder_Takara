@@ -1,7 +1,7 @@
-from ast import Return
-from urllib import request
+
 from django.shortcuts import render
-from app.models import Historias
+from psutil import users
+from app.models import Historias, Avatar
 from app.forms import UserRegisterForm, UserEditForm
 #crud
 from django.views.generic import ListView
@@ -14,12 +14,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
+@login_required
 def home(request):
-    return render(request, "app/home.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "app/home.html",{"url": avatares[0].imagen.url })
 
 def about_me(request):
     return render (request, "app/about_me.html")
+
 @login_required
 def historias(request):
     historias = Historias.objects.all()
@@ -89,6 +93,7 @@ def register(request):
 
         if form.is_valid():
             username = form.cleaned_data['username']
+
             form.save()
 
             return render(request, "app/home.html", {"mensaje": "usuario creado"})
