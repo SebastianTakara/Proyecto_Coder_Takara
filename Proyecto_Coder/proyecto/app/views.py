@@ -22,7 +22,8 @@ def home(request):
     return render(request, "app/home.html",{"url": avatares[0].imagen.url })
 
 def about_me(request):
-    return render (request, "app/about_me.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render (request, "app/about_me.html", {"url": avatares[0].imagen.url })
 
 @login_required
 def historias(request):
