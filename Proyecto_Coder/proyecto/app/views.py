@@ -2,7 +2,7 @@ from ast import Return
 from urllib import request
 from django.shortcuts import render
 from app.models import Historias
-from app.forms import UserRegisterForm
+from app.forms import UserRegisterForm, UserEditForm
 #crud
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -20,7 +20,7 @@ def home(request):
 
 def about_me(request):
     return render (request, "app/about_me.html")
-
+@login_required
 def historias(request):
     historias = Historias.objects.all()
     return render (request, "app/historias.html", {"historias": historias })
@@ -97,4 +97,31 @@ def register(request):
         form = UserRegisterForm()
 
     return render(request, "app/registro.html", {"form": form})        
+
+
+@login_required
+def editarPerfil(request):
+      #se instancia el Login; 
+      usuario = request.user
+      
+      if request.method == 'POST':
+            miFormulario = UserEditForm(request.POST)
+            if miFormulario.is_valid(): #si pasa la validación Django
+                  informacion = miFormulario.cleaned_data
+                  
+                  #datos que modificaríamos
+                  usuario.email = informacion['email']#alg@algo.com
+                  usuario.password1 = informacion['password1']#pass
+                  usuario.password2 = informacion['password2']
+                  usuario.save()
+            
+                  return render(request, "app/home.html") #vuelvo a inicio
+
+      else:
+            #creo el formulario con los datos que voy a modificar
+            miFormulario = UserEditForm(initial={'email':usuario.email})
+      
+      #voy al HTML que me permite editar
+      return render(request, "app/editar_perfil.html", {"miFormulario": miFormulario, "usuario": usuario})
+
 
